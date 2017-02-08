@@ -9,6 +9,7 @@ import javax.persistence.criteria.CriteriaQuery;
 
 import org.springframework.stereotype.Service;
 
+import com.theironyard.models.Person;
 import com.theironyard.models.Product;
 
 @Service
@@ -43,13 +44,23 @@ public class ProductsDaoImpl implements ProductsDao {
 
 	@Override
 	public Product get(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		EntityManager manager = factory.createEntityManager();
+		return manager.find(Product.class, id);
 	}
 
 	@Override
 	public void update(Product product) {
-		// TODO Auto-generated method stub
+		insert(product);
 		
+	}
+	
+	@Override
+	public void deleteById(Integer id) {
+		EntityManager manager = factory.createEntityManager();
+
+		manager.getTransaction().begin();
+		Product product = manager.find(Product.class, id);
+		manager.remove(product);
+		manager.getTransaction().commit();
 	}
 }

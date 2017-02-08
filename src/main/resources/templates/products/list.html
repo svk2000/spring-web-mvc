@@ -1,0 +1,45 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorator="common/layout">
+	<head>
+		<title>People</title>
+		<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+      	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  	</head>
+	<body class="white">
+		<main layout:fragment="content" class="container">
+			<div class="row">
+				<div class="s12">
+					<a class="orange-text waves-effect waves-teal btn-flat" th:href="@{/products/new}">Add a new product</a>
+				</div>
+				<table class="bordered">
+					<thead>
+						<tr>
+							<th>Product Name</th>
+							<th>Description</th>
+							<th>Price</th>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="product : ${products}" th:object="${product}">
+							<td th:text="*{name}">Name</td>
+							<td th:text="*{description}">Description</td>
+							<td th:text="*{price}">Price</td>
+							<td>
+								<a class="orange-text waves-effect waves-teal btn-flat" th:href="@{/products/{id}/edit(id=${product.id})}">edit</a>
+							</td>
+							<td>
+								<form method="post" th:action="@{/product/{id}(id=${product.id})}">
+									<input type="hidden" name="_method" value="delete"/>
+									<button class="waves-effect waves-light btn red darken-1">delete</button>
+								</form>
+							</td>
+						</tr>
+					</tbody>		
+				</table>
+			</div>
+		</main>
+	</body>
+</html>
